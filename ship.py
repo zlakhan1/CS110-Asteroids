@@ -2,8 +2,14 @@ import pygame
 import math
 import bullet
 import os,sys 
-
-	 
+def load_image(name, colorkey=None):
+	fullname = os.path.join("assets", name) 
+	image = pygame.image.load(fullname) 
+	image = image.convert() 
+	if colorkey is not None:
+		if colorkey is -1:
+			colorkey = image.get_at((0,0))
+	return image, image.get_rect() 
 
 class ship(pygame.sprite.Sprite):
 	'''This is the ship object it can go forward, backward, change its angle, and shoot'''
@@ -31,97 +37,137 @@ class ship(pygame.sprite.Sprite):
 			self.angle += 10
 			if self.angle >360:
 				self.angle = 0 
-			
+			a = ship.rotater(self.image, 10) 
+			self.image = a
 		elif direction[pygame.K_LEFT]:
-		'''Moves the ship forward'''
-			'''Checks for quadrant 1'''
+			print(self.angle)
 			if 0<self.angle<90:
-				self.rect.x += (math.cos(math.radians(self.angle)) * 2) 
+				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
 				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)	
-
-
-			'''Checks for postive y axis'''
+				if self.rect.y<0 or self.rect.x>600:
+					self.rect.x -= 600
+					if self.rect.x <0:
+						self.rect.x = 0
+					self.rect.y += 600
+					if self.rect.y >600 :
+						self.rect.y = 600
+				
 			if self.angle == 90:
 				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)	 
-
-			'''Checks for quadrant 2'''
+				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
+				if self.rect.y < 0:
+					self.rect.y = self.rect.y + 600	  
 			if 90<self.angle<180:
 				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
 				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)	
-			'''Checks for postive x axis'''
+				if self.rect.x<0 or self.rect.y<0:
+					self.rect.x += 600
+					if self.rect.x>600:
+						self.rect.x = 600
+					self.rect.y += 600
+					if self.rect.y >600 :
+						self.rect.y = 600
 			if self.angle == 180:
 				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)	
-			'''Checks for quadrant three'''
+				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
+				if self.rect.x<0 or self.rect.y>600:
+					self.rect.x += 600	
 			if 180<self.angle<270:
 				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
 				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
-			'''Checks for negative y axis'''
+				if self.rect.x<0 or self.rect.y>600:
+					self.rect.x += 600
+					if self.rect.x>600:
+						self.rect.x = 600
+					self.rect.y -= 600
+					if self.rect.y<0:
+						self.rect.y = 0 
 			if self.angle == 270:
 				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
 				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
-			'''Checks for quadrant 4'''
+				if self.rect.y>600:
+					self.rect.y -=600
 			if 270<self.angle<360:
 				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
 				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
-			'''Checks for negative x axis'''
+				if self.rect.y>600 or self.rect.x<0:
+					self.rect.y -= 600
+					if self.rect.y <0 :
+						self.rect.y = 0
+					self.rect.x +=600
+					if self.rect.x>600:
+						self.rect.x = 600
 			if self.angle == 0 or self.angle ==360:
 				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
-			if self.rect.y < 0 or self.rect.x <0: 
-				self.rect.y += 600
-				self.rect.x += 600
-			if self.rect.y > 600 or self.rect.x>600:
-				self.rect.y -= 600 
-				self.rect.x -= 600
+				if self.rect.x >600: 
+					self.rect.x -= 600
 		elif direction[pygame.K_DOWN]:
-			'''Decreases angle cannot go below zero'''
+			print("down") 
 			self.angle -= 10
 			if self.angle<0:
 				self.angle = 360
-			
+			b = ship.rotater(self.image,-10) 
+			self.image = b
 		elif direction[pygame.K_RIGHT]: 
-		'''Moves the ship backwards'''
-			'''Checks for quadrant 1'''
 			if 0<self.angle<90:
 				self.rect.x -= (math.cos(math.radians(self.angle)) * 2) 
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
-
-
-			'''Checks for postive y axis'''	
+				self.rect.y += (math.sin(math.radians(self.angle)) * 2)	
+			if self.rect.y < 0 or self.rect.x>600:
+				print("running") 
+				self.rect.x += 600
+					#if self.rect.x >600:
+						#self.rect.x = 0
+				self.rect.y += 600
+					#if self.rect.y >600 :
+					#	self.rect.y = 0
 			if self.angle == 90:
 				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)	 
-			'''Checks for quadrant 2'''
+				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
+			if self.rect.y>600:
+				self.rect.y -= 600	 
 			if 90<self.angle<180:
 				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
-			'''Checks for postive x axis'''	
+				self.rect.y += (math.sin(math.radians(self.angle)) * 2)	
+			if self.rect.x<0 or self.rect.y<0:
+				self.rect.x += 600
+				self.rect.y += 600
 			if self.angle == 180:
 				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)	
-			'''Check for quadrant 3'''
+				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
+			if self.rect.x>600:
+				self.rect.x -= 600
+						
 			if 180<self.angle<270:
 				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
 				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
-			'''Check for negative y axis'''
+			if self.rect.x < 0 or self.rect.y>600:
+				self.rect.x += 600
+				self.rect.y -=600
 			if self.angle == 270:
 				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
 				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
-			'''Check for quadrant 4'''
+			if self.rect.y<0:
+				self.rect.y += 600
 			if 270<self.angle<360:
 				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
 				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
-			'''Check for negative x axis'''
+				
+			if self.rect.x > 600 or self.rect.y > 600:
+				self.rect.x -= 600
+				self.rect.y -= 600
 			if self.angle == 0 or self.angle ==360:
 				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
 				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
+			if self.rect.x <0:
+				self.rect.x += 600
+		elif direction[pygame.K_e]:
+			bill = bullet.bullet(self.rect.x, self.rect.y, self.angle)
+			bill.move()
+			print("bullet is :",bill.rect.x,bill.rect.y,bill.angle)
 			
 	def shoot(self,angle):
 		'''Calls the bullet object'''
-		bill = bullet.bullet(self.x, self.y, self.angle)
-		bill.move()
+		
 	def update(self):
 		print("Updating") 
 
