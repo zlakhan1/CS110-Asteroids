@@ -10,16 +10,20 @@ def load_image(name, colorkey=None):
 		if colorkey is -1:
 			colorkey = image.get_at((0,0))
 	return image, image.get_rect() 
-
+def load_sound(name):
+	fullname = os.path.join('assets', name)
+	sound = pygame.mixer.Sound(fullname)
+	return sound 
 class ship(pygame.sprite.Sprite):
 	'''This is the ship object it can go forward, backward, change its angle, and shoot'''
 	def __init__(self, x , y, angle):
 		pygame.sprite.Sprite.__init__(self)
 		self.image, self.rect = load_image('spaceshipmod.png', -1) 
 		self. image = pygame.transform.scale(self.image, (100, 100))
-		self.rect.x = x
-		self.rect.y = y
-		self.angle = angle
+		self.rect.x = float(x)
+		self.rect.y = float(y)
+		self.angle = float(angle)
+		print(type(self.rect.x))
 	def rotater(image,angle):
 		"""rotate an image while keeping its center and size"""
 		orig_rect = image.get_rect()
@@ -41,25 +45,21 @@ class ship(pygame.sprite.Sprite):
 			self.image = a
 		elif direction[pygame.K_LEFT]:
 			print(self.angle)
-			if 0<self.angle<90:
-				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)	
+			self.rect.x += float((math.cos(math.radians(self.angle)) * 2.0))
+			self.rect.y -= float((math.sin(math.radians(self.angle)) *2.0))
+			print(type(self.rect.x))
+			if 0<self.angle<90:	
 				if self.rect.y<0 or self.rect.x>600:
-					self.rect.x -= 600
+					self.rect.x -= float(600)
 					if self.rect.x <0:
-						self.rect.x = 0
-					self.rect.y += 600
+						self.rect.x = float(0)
+					self.rect.y += float(600)
 					if self.rect.y >600 :
-						self.rect.y = 600
-				
+						self.rect.y = float(600)
 			if self.angle == 90:
-				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
 				if self.rect.y < 0:
 					self.rect.y = self.rect.y + 600	  
-			if 90<self.angle<180:
-				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)	
+			if 90<self.angle<180:	
 				if self.rect.x<0 or self.rect.y<0:
 					self.rect.x += 600
 					if self.rect.x>600:
@@ -68,13 +68,9 @@ class ship(pygame.sprite.Sprite):
 					if self.rect.y >600 :
 						self.rect.y = 600
 			if self.angle == 180:
-				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
-				if self.rect.x<0 or self.rect.y>600:
+				if self.rect.x<0:
 					self.rect.x += 600	
 			if 180<self.angle<270:
-				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
 				if self.rect.x<0 or self.rect.y>600:
 					self.rect.x += 600
 					if self.rect.x>600:
@@ -83,24 +79,20 @@ class ship(pygame.sprite.Sprite):
 					if self.rect.y<0:
 						self.rect.y = 0 
 			if self.angle == 270:
-				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
 				if self.rect.y>600:
-					self.rect.y -=600
-			if 270<self.angle<360:
-				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
-				if self.rect.y>600 or self.rect.x<0:
 					self.rect.y -= 600
-					if self.rect.y <0 :
-						self.rect.y = 0
-					self.rect.x +=600
-					if self.rect.x>600:
+			if 270<self.angle<360:
+				if self.rect.x>600 or self.rect.y>600:
+					self.rect.x -=600
+					if self.rect.x > 600:
 						self.rect.x = 600
-			if self.angle == 0 or self.angle ==360:
-				self.rect.x += (math.cos(math.radians(self.angle)) * 2)
-				if self.rect.x >600: 
+					self.rect.y -=600
+					if self.rect.y > 600:
+						self.rect.y = 600
+			if self.angle == 360 or self.angle == 0:
+				if self.rect.x > 600:
 					self.rect.x -= 600
+
 		elif direction[pygame.K_DOWN]:
 			print("down") 
 			self.angle -= 10
@@ -109,65 +101,57 @@ class ship(pygame.sprite.Sprite):
 			b = ship.rotater(self.image,-10) 
 			self.image = b
 		elif direction[pygame.K_RIGHT]: 
-			if 0<self.angle<90:
-				self.rect.x -= (math.cos(math.radians(self.angle)) * 2) 
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)	
-			if self.rect.y < 0 or self.rect.x>600:
-				print("running") 
-				self.rect.x += 600
-					#if self.rect.x >600:
-						#self.rect.x = 0
-				self.rect.y += 600
-					#if self.rect.y >600 :
-					#	self.rect.y = 0
+			self.rect.x -= float((math.cos(math.radians(self.angle)) *2)) 
+			self.rect.y += float((math.sin(math.radians(self.angle)) *2))
+			if 90<self.angle<180:	
+				if self.rect.y>600 or self.rect.x>600:
+					self.rect.x -= 600
+					if self.rect.x <0:
+						self.rect.x = float(0)
+					self.rect.y -= 600
+					if self.rect.y <0 :
+						self.rect.y = 0
 			if self.angle == 90:
-				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
-			if self.rect.y>600:
-				self.rect.y -= 600	 
-			if 90<self.angle<180:
-				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)	
-			if self.rect.x<0 or self.rect.y<0:
-				self.rect.x += 600
-				self.rect.y += 600
-			if self.angle == 180:
-				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
-			if self.rect.x>600:
-				self.rect.x -= 600
-						
-			if 180<self.angle<270:
-				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
-			if self.rect.x < 0 or self.rect.y>600:
-				self.rect.x += 600
-				self.rect.y -=600
+				if self.rect.y > 600:
+					self.rect.y -= 600	  
+			if 180<self.angle<270:	
+				if self.rect.x>600 or self.rect.y<0:
+					self.rect.x -= 600
+					if self.rect.x<0:
+						self.rect.x = 0
+					self.rect.y += 600
+					if self.rect.y >600 :
+						self.rect.y = 600
+			if self.angle == 0 or self.angle == 360:
+				if self.rect.x<0:
+					self.rect.x += 600	
+			if 0<self.angle<90:
+				if self.rect.x<0 or self.rect.y>600:
+					self.rect.x += 600
+					if self.rect.x>600:
+						self.rect.x = 600
+					self.rect.y -= 600
+					if self.rect.y<0:
+						self.rect.y = 0 
 			if self.angle == 270:
-				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
-			if self.rect.y<0:
-				self.rect.y += 600
+				if self.rect.y<0:
+					self.rect.y += 600
 			if 270<self.angle<360:
-				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y += (math.sin(math.radians(self.angle)) * 2)
-				
-			if self.rect.x > 600 or self.rect.y > 600:
-				self.rect.x -= 600
-				self.rect.y -= 600
-			if self.angle == 0 or self.angle ==360:
-				self.rect.x -= (math.cos(math.radians(self.angle)) * 2)
-				self.rect.y -= (math.sin(math.radians(self.angle)) * 2)
-			if self.rect.x <0:
-				self.rect.x += 600
+				if self.rect.x<0 or self.rect.y<0:
+					self.rect.x +=600
+					if self.rect.x > 600:
+						self.rect.x = 600
+					self.rect.y +=600
+					if self.rect.y > 600:
+						self.rect.y = 600
+			if self.angle == 360 or self.angle == 0:
+				if self.rect.x > 600:
+					self.rect.x -= 600
 		elif direction[pygame.K_e]:
+			load_sound("blast.wav") 
 			bill = bullet.bullet(self.rect.x, self.rect.y, self.angle)
 			bill.move()
 			print("bullet is :",bill.rect.x,bill.rect.y,bill.angle)
-			
-	def shoot(self,angle):
-		'''Calls the bullet object'''
-		
 	def update(self):
 		print("Updating") 
 

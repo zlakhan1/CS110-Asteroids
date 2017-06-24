@@ -25,26 +25,56 @@ class asteriod(pygame.sprite.Sprite):
 	def move(self):
 		'''Asteriod moves based on angle depending on the random value the asteriods will move at diffrent angles'''
 		print(self.angle)
-		angler = math.radians(self.angle)
 		moverx = random.randrange(0,21) 
 		movery = random.randrange(0,21)
-		self.rect.x += (math.cos(angler) * moverx) 
-		self.rect.y += (math.sin(angler) * movery)
-		if self.rect.x >600 or self.rect.y<0:
-			self.rect.x -= 600
-			self.rect.y += 600
-		if self.rect.x<0 or self.rect.y>600:
-			self.rect.x += 600
-			self.rect.y -= 600
-		x = random.randrange(0,11)
-		angleOne = random.randrange(0,361)
-		angleTwo = random.randrange(0,361) 
-		if x % 2 == 0:
-			self.angle += angleOne
-		else:
-			self.angle -= angleTwo
-		if self.angle>=360 or self.angle<=-360:
-			self.angle = 0
+		self.rect.x += float((math.cos(math.radians(self.angle)) * moverx))
+		self.rect.y -= float((math.sin(math.radians(self.angle)) * movery))
+		if 0<self.angle<90:	
+			if self.rect.y<0 or self.rect.x>600:
+				self.rect.x -= float(600)
+				if self.rect.x <0:
+					self.rect.x = float(0)
+				self.rect.y += float(600)
+				if self.rect.y >600 :
+					self.rect.y = float(600)
+			if self.angle == 90:
+				if self.rect.y < 0:
+					self.rect.y = self.rect.y + 600	  
+			if 90<self.angle<180:	
+				if self.rect.x<0 or self.rect.y<0:
+					self.rect.x += 600
+					if self.rect.x>600:
+						self.rect.x = 600
+					self.rect.y += 600
+					if self.rect.y >600 :
+						self.rect.y = 600
+			if self.angle == 180:
+				if self.rect.x<0:
+					self.rect.x += 600	
+			if 180<self.angle<270:
+				if self.rect.x<0 or self.rect.y>600:
+					self.rect.x += 600
+					if self.rect.x>600:
+						self.rect.x = 600
+					self.rect.y -= 600
+					if self.rect.y<0:
+						self.rect.y = 0 
+			if self.angle == 270:
+				if self.rect.y>600:
+					self.rect.y -= 600
+			if 270<self.angle<360:
+				if self.rect.x>600 or self.rect.y>600:
+					self.rect.x -=600
+					if self.rect.x > 600:
+						self.rect.x = 600
+					self.rect.y -=600
+					if self.rect.y > 600:
+						self.rect.y = 600
+			if self.angle == 360 or self.angle == 0:
+				if self.rect.x > 600:
+					self.rect.x -= 600
+			angler = random.randrange(0,361)
+			self.angle = angler
 			
 	def health(self, level):
 		'''Sets the asteriods health, it will do more later'''
