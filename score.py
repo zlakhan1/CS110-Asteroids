@@ -3,10 +3,13 @@ import json
 
 class score():
 	def __init__(self):
+		'''Initalizes the players score to 0''' 
 		self.score = 0 
 	def points(self, amnt):
+		'''Increases the score by some amount'''
 		self.score += amnt 
 	def player(self):
+		'''Generates a dictonary with the high scores if a file is not found one is created'''
 		data = {} 
 		while True:
 			name = input("What is your name") 
@@ -35,10 +38,8 @@ class score():
 		datastr = json.dumps(data) 
 		fptr.write(datastr) 
 		highscore = max(data, key=data.get) 
-		print("highscore is :", highscore,':',data[name]) 
+		message = "highscore is :", highscore,':',data[name]
+		message = str(message)  
 		fptr.close()
-def main():
-	person = score() 
-	person.points(200)
-	person.player()
-main() 
+		return message 
+

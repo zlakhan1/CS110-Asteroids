@@ -3,9 +3,10 @@ import pygame
 import os,sys
 import ship
 def load_image(name, colorkey=None):
+	'''Loads an image and converts it to use in pygame'''
 	fullname = os.path.join("assets", name) 
 	image = pygame.image.load(fullname) 
-	image = image.convert() 
+	image = image.convert_alpha() 
 	if colorkey is not None:
 		if colorkey is -1:
 			colorkey = image.get_at((0,0))
@@ -20,10 +21,8 @@ class bullet(pygame.sprite.Sprite):
 		self.angle = angle
 	def move(self):
 		'''The bullet is called then appears on the ships current x,y and with the ships current angle it then travels forward''' 
-		print(self.angle)
 		angler = math.radians(self.angle) 
-		self.rect.x +=(math.cos(angler) * 10) 
-		self.rect.y +=(math.sin(angler) * 10)	
-		print(self.rect.x,self.rect.y) 
+		self.rect.x +=(math.cos(angler) * 100) 
+		self.rect.y -=(math.sin(angler) * 100)	
 	def update(self):
 		print("updating") 
