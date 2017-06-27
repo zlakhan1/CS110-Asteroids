@@ -7,6 +7,7 @@ def load_image(name, colorkey=None):
 	fullname = os.path.join("assets", name) 
 	image = pygame.image.load(fullname) 
 	image = image.convert_alpha() 
+	image = pygame.transform.scale(image,(40,40))
 	if colorkey is not None:
 		if colorkey is -1:
 			colorkey = image.get_at((0,0))
