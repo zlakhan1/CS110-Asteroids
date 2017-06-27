@@ -13,9 +13,9 @@ def main():
 	screen = pygame.display.set_mode((600,600))
 	background = pygame.Surface(screen.get_size()) 
 	background = background.convert()
-	nimbus = ship.ship(300.0,300.0,90)
+	nimbus = ship.ship(100.0,100.0,90)
 	#pewpew = bullet.bullet(nimbus.rect.x,nimbus.rect.y,nimbus.angle)
-	aster = asteriod.asteriod(300,300,90) 
+	aster = asteriod.asteriod(100,100,90) 
 	background.fill((0,0,0)) 
 	white = (250, 250,250)
 	screen.blit(background,(0,0)) 
@@ -34,6 +34,7 @@ def main():
 	while start_screen == True:
 		myfont = pygame.font.SysFont("Britannic Bold", 40)
 		intro = myfont.render("Welcome, press enter to start", 1,white) 
+		game_over = myfont.render(" G A M E  O V E R", 4,white)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 					return 
@@ -53,8 +54,16 @@ def main():
 				return
 			#pygame.mixer.music.load('theme.mp3') #plays music
 			#pygame.mixer.music.play( loops = -1, start = 0.0)	
+			counter = 0
 			if pygame.sprite.collide_rect(aster,nimbus):
+				for i in range counter collision:		
+				counter += 1				
 				print('cross')
+				#print(counter)
+			if counter == 5:
+				screen.blit(game_over,(100,100))				
+			if pygame.sprite.collide_rect(aster,laser):
+				print('hit')
 			keys = pygame.key.get_pressed()
 			nimbus.move(keys) 
 			nimbus.shoot(keys) 
