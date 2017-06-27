@@ -169,15 +169,16 @@ class ship(pygame.sprite.Sprite):
 			if self.angle == 360 or self.angle == 0:
 				if self.rect.x > 600:
 					self.rect.x -= 600
-		elif direction[pygame.K_e]:
+	def shoot(self,key):
+		if key[pygame.K_e]:
 			'''creates and calls the bullet class to shoot'''
 			bill = bullet.bullet(self.rect.x, self.rect.y, self.angle)
 			bill.move()
-			print(bill.rect.x, bill.rect.y, bill.angle) 
+			coor = [bill.rect.x, bill.rect.y, bill.angle]
+			return coor 
 	def livesUpdate(self):
 		'''Decreases the number of lives'''
 		self.health -= 1 
-	
 	def update(self):
 		print("Updating") 
 

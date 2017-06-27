@@ -22,7 +22,13 @@ class bullet(pygame.sprite.Sprite):
 	def move(self):
 		'''The bullet is called then appears on the ships current x,y and with the ships current angle it then travels forward''' 
 		angler = math.radians(self.angle) 
-		self.rect.x +=(math.cos(angler) * 100) 
-		self.rect.y -=(math.sin(angler) * 100)	
+		self.rect.x +=(math.cos(angler)) 
+		self.rect.y -=(math.sin(angler))	
+	def setCoor(self,x,y,angle):
+		self.rect.x = x 
+		self.rect.y = y 
+		self.angle = angle 
 	def update(self):
-		print("updating") 
+		angler = math.radians(self.angle) 
+		self.rect.x +=(math.cos(angler) * 2) 
+		self.rect.y -=(math.sin(angler) * 2)

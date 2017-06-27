@@ -38,8 +38,7 @@ class score():
 		datastr = json.dumps(data) 
 		fptr.write(datastr) 
 		highscore = max(data, key=data.get) 
-		message = "highscore is :", highscore,':',data[name]
-		message = str(message)  
+		message = [highscore,data[name]] 
 		fptr.close()
 		return message 
 

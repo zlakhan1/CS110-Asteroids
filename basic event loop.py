@@ -17,6 +17,7 @@ def main():
 	#pewpew = bullet.bullet(nimbus.rect.x,nimbus.rect.y,nimbus.angle)
 	aster = asteriod.asteriod(300,300,90) 
 	background.fill((0,0,0)) 
+	white = (250, 250,250)
 	screen.blit(background,(0,0)) 
 	laser = bullet.bullet(10,10,0) 
 	#pygame.transform.scale(aster, (20, 20))
@@ -25,12 +26,26 @@ def main():
 	randx = random.randrange(300)
 	randy = random.randrange(300)
 	allsprites = pygame.sprite.Group((nimbus,aster,))
-
 	clock = pygame.time.Clock() 
 	pygame.key.set_repeat(1,10) 
-		
+	start_screen = True
+	game_screen = False 
+	end_screen = False 	
+	while start_screen == True:
+		myfont = pygame.font.SysFont("Britannic Bold", 40)
+		intro = myfont.render("Welcome, press enter to start", 1,white) 
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+					return 
+			keys = pygame.key.get_pressed()
+			if keys[pygame.K_KP_ENTER ]:
+				print("test") 
+				start_screen = False
+				game_screen = True 
+		screen.blit(intro,(100,100)) 
+		pygame.display.flip() 
 
-	while True:
+	while game_screen == True:
 		screen.blit(background,(0,0))
 		clock.tick(120) 
 		for event in pygame.event.get():
@@ -41,18 +56,28 @@ def main():
 			if pygame.sprite.collide_rect(aster,nimbus):
 				print('cross')
 			keys = pygame.key.get_pressed()
-			if keys[pygame.K_e]:
-
-				laser.rect.x = nimbus.rect.x
-				laser.rect.y = nimbus.rect.y
-				laser.angle = nimbus.angle
-				allsprites.add(laser) 
-				laser.move()
 			nimbus.move(keys) 
-
+			nimbus.shoot(keys) 
+			if keys[pygame.K_e]:
+				coor = nimbus.shoot(keys)
+				laser.setCoor(coor[0] + 30,coor[1],coor[2]) 
+				allsprites.add(laser)   
+		laser.update()
 		allsprites.draw(screen)
-
 		pygame.display.flip() 
 
-	quit() 
+	#quit()
+	while end_screen == True:
+		myfont = pygame.font.SysFont("Britannic Bold", 40)
+		intro = myfont.render("Gameover, press enter to continue", 1,white) 
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+					return 
+			keys = pygame.key.get_pressed()
+			if keys[pygame.K_KP_ENTER ]:
+				print("test") 
+				end_screen = False
+				start_screen = True 
+		screen.blit(intro,(100,100)) 
+		pygame.display.flip() 
 main() 

@@ -86,7 +86,7 @@ class asteriod(pygame.sprite.Sprite):
 		angler = random.randrange(0,361)
 		self.angle = angler
 			
-	def health(self, y ):
+	def health(self):
 		'''Sets the asteriods health'''
 		y = random.randrange(0,2)
 		if y == 1 :
