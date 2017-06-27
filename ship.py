@@ -7,6 +7,7 @@ def load_image(name, colorkey=None):
 	fullname = os.path.join("assets", name) 
 	image = pygame.image.load(fullname) 
 	image = image.convert_alpha() 
+	pygame.transform.scale(image,(100,100))
 	if colorkey is not None:
 		if colorkey is -1:
 			colorkey = image.get_at((0,0))
@@ -20,7 +21,7 @@ class ship(pygame.sprite.Sprite):
 	def __init__(self, x , y, angle):
 		pygame.sprite.Sprite.__init__(self)
 		self.image, self.rect = load_image('spaceshipmod.png', -1) 
-		self. image = pygame.transform.scale(self.image, (100, 100))
+		self.image= pygame.transform.scale(self.image, (100, 100))
 		self.rect.x = x
 		self.rect.y = y
 		self.angle = angle
@@ -181,5 +182,4 @@ class ship(pygame.sprite.Sprite):
 		self.health -= 1 
 	def update(self):
 		print("Updating") 
-
 
