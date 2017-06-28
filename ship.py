@@ -22,6 +22,8 @@ class ship(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self)
 		self.image, self.rect = load_image('spaceshipmod.png', -1) 
 		self.image= pygame.transform.scale(self.image, (100, 100))
+		self.orig = self.image 
+		self.x = 0 
 		self.rect.x = x
 		self.rect.y = y
 		self.angle = angle
@@ -40,12 +42,16 @@ class ship(pygame.sprite.Sprite):
 			self.angle += 10
 			if self.angle > 360:
 				self.angle = 0 
-			a = ship.rotater(self.image, 10) 
+			print(self.angle)
+			print(self.x)  
+			a = ship.rotater(self.orig, self.x + 10) 
+			self.x += 10
+			if self.x > 360:
+				self.x = 0 
 			self.image = a
 		elif direction[pygame.K_LEFT]:
 			self.rect.x += (math.cos(math.radians(self.angle)) * 2.0) #moves x based on cosine 
 			self.rect.y -= (math.sin(math.radians(self.angle)) *2.0) # moves y based on sine 
-			'''Checks if the ship is pointing toward first quadrant'''
 			if 0<self.angle<90:	
 				if self.rect.y<0 or self.rect.x>600:
 					self.rect.x -= 600
@@ -54,10 +60,10 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y += 600
 					if self.rect.y >600 :
 						self.rect.y = 600
-			elif (self.angle == 90):
+			if (self.angle == 90):
 				if self.rect.y < 0:
 					self.rect.y = self.rect.y + 600
-			elif 90<self.angle<180:	
+			if 90<self.angle<180:	
 				if self.rect.x<0 or self.rect.y<0:
 					self.rect.x += 600
 					if self.rect.x>600:
@@ -65,10 +71,10 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y += 600
 					if self.rect.y >600 :
 						self.rect.y = 600
-			elif self.angle == 180:
+			if self.angle == 180:
 				if self.rect.x<0:
 					self.rect.x += 600	
-			elif 180<self.angle<270:
+			if 180<self.angle<270:
 				if self.rect.x<0 or self.rect.y>600:
 					self.rect.x += 600
 					if self.rect.x>600:
@@ -76,10 +82,10 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y -= 600
 					if self.rect.y<0:
 						self.rect.y = 0
-			elif self.angle == 270:
+			if self.angle == 270:
 				if self.rect.y>600:
 					self.rect.y -= 600
-			elif 270<self.angle<360:
+			if 270<self.angle<360:
 				if self.rect.x>600 or self.rect.y>600:
 					self.rect.x -=600
 					if self.rect.x > 600:
@@ -87,7 +93,7 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y -=600
 					if self.rect.y > 600:
 						self.rect.y = 600		
-			elif self.angle == 360 or self.angle == 0:
+			if self.angle == 360 or self.angle == 0:
 				if self.rect.x > 600:
 					self.rect.x -= 600
 		elif direction[pygame.K_DOWN]:
@@ -112,10 +118,10 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y -= 600
 					if self.rect.y <0 :
 						self.rect.y = 0
-			elif self.angle == 90:
+			if self.angle == 90:
 				if self.rect.y > 600:
 					self.rect.y -= 600
-			elif 180<self.angle<270:	
+			if 180<self.angle<270:	
 				if self.rect.x>600 or self.rect.y<0:
 					self.rect.x -= 600
 					if self.rect.x<0:
@@ -123,7 +129,7 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y += 600
 					if self.rect.y >600 :
 						self.rect.y = 600	
-			elif 0<self.angle<90:
+			if 0<self.angle<90:
 				if self.rect.x<0 or self.rect.y>600:
 					self.rect.x += 600
 					if self.rect.x>600:
@@ -131,13 +137,13 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y -= 600
 					if self.rect.y<0:
 						self.rect.y = 0
-			elif self.angle == 180:
+			if self.angle == 180:
 					if self.rect.x >600:
 						self.rect.x -= 600
-			elif self.angle == 270:
+			if self.angle == 270:
 				if self.rect.y<0:
 					self.rect.y += 600
-			elif 270<self.angle<360:
+			if 270<self.angle<360:
 				if self.rect.x<0 or self.rect.y<0:
 					self.rect.x +=600
 					if self.rect.x > 600:
@@ -145,7 +151,7 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y +=600
 					if self.rect.y > 600:
 						self.rect.y = 600
-			elif self.angle == 360 or self.angle == 0:
+			if self.angle == 360 or self.angle == 0:
 				if self.rect.x < 0:
 					self.rect.x += 600
 	def shoot(self,key):
