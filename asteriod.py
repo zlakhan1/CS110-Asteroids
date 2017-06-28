@@ -12,9 +12,6 @@ def load_image(name, colorkey=None):
 		if colorkey is -1:
 			colorkey = image.get_at((0,0))
 	return image, image.get_rect() 
-	 
-
-	return image, image.get_rect()
 class asteriod(pygame.sprite.Sprite):
 	'''Asteroidd needs some more work just a rough idea of what is needed'''
 	def __init__(self,x,y,angle):
@@ -37,14 +34,10 @@ class asteriod(pygame.sprite.Sprite):
 				self.rect.y += 600
 				if self.rect.y >600 :
 					self.rect.y = 600
-
-		'''Checks if the asteroid is pointed up'''
-		if self.angle == 90:
+		elif self.angle == 90:
 			if self.rect.y < 0:
 				self.rect.y = self.rect.y + 600	  
-
-		'''Checks if the asteroid is pointed toward the second quadrant'''
-		if 90<self.angle<180:	
+		elif 90<self.angle<180:	
 			if self.rect.x<0 or self.rect.y<0:
 				self.rect.x += 600
 				if self.rect.x>600:
@@ -52,13 +45,10 @@ class asteriod(pygame.sprite.Sprite):
 				self.rect.y += 600
 				if self.rect.y >600 :
 					self.rect.y = 600
-
-		'''Checks if the asteriod is pointed left'''
-		if self.angle == 180:
+		elif (self.angle == 180):
 			if self.rect.x<0:
-				self.rect.x += 600
-		'''Checks if the asteroid is pointed toward the third quadrant'''	
-		if 180<self.angle<270:
+				self.rect.x += 600	
+		elif 180<self.angle<270:
 			if self.rect.x<0 or self.rect.y>600:
 				self.rect.x += 600
 				if self.rect.x>600:
@@ -66,13 +56,10 @@ class asteriod(pygame.sprite.Sprite):
 				self.rect.y -= 600
 				if self.rect.y<0:
 					self.rect.y = 0 
-
-		'''Checks to see of the asteroid is pointed down'''
-		if self.angle == 270:
+		elif self.angle == 270:
 			if self.rect.y>600:
 				self.rect.y -= 600
-		'''Checks to see if the asteroid is pointed toward the fourth quadrant'''
-		if 270<self.angle<360:
+		elif 270<self.angle<360:
 			if self.rect.x>600 or self.rect.y>600:
 				self.rect.x -=600
 				if self.rect.x > 600:
@@ -80,8 +67,7 @@ class asteriod(pygame.sprite.Sprite):
 				self.rect.y -=600
 				if self.rect.y > 600:
 					self.rect.y = 600
-		'''Checks to see if the asteroid is pointed to the right''' 
-		if self.angle == 360 or self.angle == 0:
+		elif self.angle == 360 or self.angle == 0:
 			if self.rect.x > 600:
 				self.rect.x -= 600
 		angler = random.randrange(0,361)

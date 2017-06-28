@@ -54,15 +54,10 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y += 600
 					if self.rect.y >600 :
 						self.rect.y = 600
-
-			'''Checks if the ship is pointing toward top'''
-			if self.angle == 90:
+			elif (self.angle == 90):
 				if self.rect.y < 0:
 					self.rect.y = self.rect.y + 600
-
-
-			'''Checks if the ship is pointing toward the second quadrant'''	  
-			if 90<self.angle<180:	
+			elif 90<self.angle<180:	
 				if self.rect.x<0 or self.rect.y<0:
 					self.rect.x += 600
 					if self.rect.x>600:
@@ -70,40 +65,29 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y += 600
 					if self.rect.y >600 :
 						self.rect.y = 600
-
-			'''Checks if the ship is pointing right'''
-			if self.angle == 180:
+			elif self.angle == 180:
 				if self.rect.x<0:
 					self.rect.x += 600	
-
-
-			'''Checks if the ship is point toward the third quadrant'''
-			if 180<self.angle<270:
+			elif 180<self.angle<270:
 				if self.rect.x<0 or self.rect.y>600:
 					self.rect.x += 600
 					if self.rect.x>600:
 						self.rect.x = 600
 					self.rect.y -= 600
 					if self.rect.y<0:
-						self.rect.y = 0 
-			
-			'''Checks if the ship is point down'''
-			if self.angle == 270:
+						self.rect.y = 0
+			elif self.angle == 270:
 				if self.rect.y>600:
 					self.rect.y -= 600
-
-			'''Checks if the ship is pointing toward the fourth quadrant'''
-			if 270<self.angle<360:
+			elif 270<self.angle<360:
 				if self.rect.x>600 or self.rect.y>600:
 					self.rect.x -=600
 					if self.rect.x > 600:
 						self.rect.x = 600
 					self.rect.y -=600
 					if self.rect.y > 600:
-						self.rect.y = 600
-			
-			'''Checks if the ship is pointed left'''		
-			if self.angle == 360 or self.angle == 0:
+						self.rect.y = 600		
+			elif self.angle == 360 or self.angle == 0:
 				if self.rect.x > 600:
 					self.rect.x -= 600
 		elif direction[pygame.K_DOWN]:
@@ -128,36 +112,32 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y -= 600
 					if self.rect.y <0 :
 						self.rect.y = 0
-
-			'''Checks if the ship is pointed up'''
-			if self.angle == 90:
+			elif self.angle == 90:
 				if self.rect.y > 600:
-					self.rect.y -= 600	
-
-			'''Checks if the ship is pointed toward the third quadrant'''  
-			if 180<self.angle<270:	
+					self.rect.y -= 600
+			elif 180<self.angle<270:	
 				if self.rect.x>600 or self.rect.y<0:
 					self.rect.x -= 600
 					if self.rect.x<0:
 						self.rect.x = 0
 					self.rect.y += 600
 					if self.rect.y >600 :
-						self.rect.y = 600
-			'''Checks if the pointed toward the first quadrant'''	
-			if 0<self.angle<90:
+						self.rect.y = 600	
+			elif 0<self.angle<90:
 				if self.rect.x<0 or self.rect.y>600:
 					self.rect.x += 600
 					if self.rect.x>600:
 						self.rect.x = 600
 					self.rect.y -= 600
 					if self.rect.y<0:
-						self.rect.y = 0 
-			'''Checks if the ship is pointed down'''
-			if self.angle == 270:
+						self.rect.y = 0
+			elif self.angle == 180:
+					if self.rect.x >600:
+						self.rect.x -= 600
+			elif self.angle == 270:
 				if self.rect.y<0:
 					self.rect.y += 600
-			'''Checks if the ship is pointed toward the fourth quadrant'''
-			if 270<self.angle<360:
+			elif 270<self.angle<360:
 				if self.rect.x<0 or self.rect.y<0:
 					self.rect.x +=600
 					if self.rect.x > 600:
@@ -165,11 +145,9 @@ class ship(pygame.sprite.Sprite):
 					self.rect.y +=600
 					if self.rect.y > 600:
 						self.rect.y = 600
-
-			'''Checks if the ship is pointed right''' 
-			if self.angle == 360 or self.angle == 0:
-				if self.rect.x > 600:
-					self.rect.x -= 600
+			elif self.angle == 360 or self.angle == 0:
+				if self.rect.x < 0:
+					self.rect.x += 600
 	def shoot(self,key):
 		if key[pygame.K_e]:
 			'''creates and calls the bullet class to shoot'''
