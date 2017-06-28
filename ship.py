@@ -23,7 +23,8 @@ class ship(pygame.sprite.Sprite):
 		self.image, self.rect = load_image('spaceshipmod.png', -1) 
 		self.image= pygame.transform.scale(self.image, (100, 100))
 		self.orig = self.image 
-		self.x = 0 
+		self.x = 0
+		self.y = 360
 		self.rect.x = x
 		self.rect.y = y
 		self.angle = angle
@@ -42,7 +43,7 @@ class ship(pygame.sprite.Sprite):
 			self.angle += 10
 			if self.angle > 360:
 				self.angle = 0 
-			print(self.angle)
+			print('angle',self.angle)
 			print(self.x)  
 			a = ship.rotater(self.orig, self.x + 10) 
 			self.x += 10
@@ -102,7 +103,10 @@ class ship(pygame.sprite.Sprite):
 			'''Converts a negative angle 360'''
 			if self.angle<0:
 				self.angle = 360
-			b = ship.rotater(self.image,-10) 
+			b = ship.rotater(self.orig, self.x - 10) 
+			self.x -= 10
+			if self.x < 0:
+				self.y = 360
 			self.image = b
 		elif direction[pygame.K_RIGHT]: 
 			'''Moves the ship backwards'''
