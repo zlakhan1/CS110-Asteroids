@@ -3,7 +3,7 @@ import pygame
 import bullet
 import asteriod
 import random
-import score 
+import score  
 		
 
 def main():
@@ -11,6 +11,8 @@ def main():
 	pygame.init()
 	pygame.mixer.pre_init()
 	player = score.score()
+	#pygame.mixer.music.load('betsky.ogg')
+	#pygame.mixer.music.play(loops = 15, start = 0.0)
 	screen = pygame.display.set_mode((600,600))
 	background = pygame.Surface(screen.get_size()) 
 	background = background.convert()
@@ -26,7 +28,8 @@ def main():
 	pygame.display.flip() 
 	randx = random.randrange(300)
 	randy = random.randrange(300)
-	allsprites = pygame.sprite.Group((nimbus,aster,))
+	allsprites = pygame.sprite.Group((aster))
+	
 	clock = pygame.time.Clock() 
 	pygame.key.set_repeat(1,10) 
 	start_screen = True
@@ -53,17 +56,14 @@ def main():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				return
-			#pygame.mixer.music.load('theme.mp3') #plays music
-			#pygame.mixer.music.play( loops = -1, start = 0.0)	
-			counter = 0
-			'''if pygame.sprite.collide_rect(aster,nimbus):
-				for i in range counter collision:		
-				counter += 1				
+			crash = pygame.sprite.collide_rect(aster, nimbus)
+			counter = 0			
+			if crash:	
+				counter += 1
 				print('cross')
-				#print(counter)'''
 			if counter == 5:
 				screen.blit(game_over,(100,100))				
-			if pygame.sprite.collide_rect(aster,laser):
+			if pygame.sprite.spritecollide(laser,allsprites,True):
 				print('hit')
 			keys = pygame.key.get_pressed()
 			nimbus.move(keys) 
@@ -76,6 +76,7 @@ def main():
 		pygame.display.set_caption(currentscore)   
 		laser.update()
 		allsprites.draw(screen)
+		screen.blit(nimbus.image,nimbus.rect)
 		pygame.display.flip() 
 
 	#quit()
@@ -85,16 +86,18 @@ def main():
 		print("up", up) 
 		myfont = pygame.font.SysFont("Britannic Bold", 40)
 		intro = myfont.render("Gameover, press enter to continue", 1,white)
-		scorer = myfont.render(up, 0 , white) 
+		scorer = myfont.render(up, 0 , white) 		
+		myfont = pygame.font.SysFont("Britannic Bold", 40)
+		intro = myfont.render("Gameover, press enter to continue", 1,white) 
+		scorer = myfont.render(up, 0 , white)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 					return 
 			keys = pygame.key.get_pressed()
-			if keys[pygame.K_KP_ENTER]:
+			if keys[pygame.K_KP_ENTER ]:
 				print("test") 
-				end_screen = False 
-				start_screen = True
+				end_screen = False
+				start_screen = True 
 		screen.blit(intro,(100,100)) 
-		screen.blit(scorer,(100,200)) 
 		pygame.display.flip() 
 main() 
