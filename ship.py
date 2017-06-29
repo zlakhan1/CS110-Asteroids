@@ -14,6 +14,7 @@ def load_image(name, colorkey=None):
 			colorkey = image.get_at((0,0))
 	return image, image.get_rect() 
 def load_sound(name):
+	'''Loads a ogg file for sound'''
 	fullname = os.path.join('assets', name)
 	sound = pygame.mixer.Sound(fullname)
 	return sound 
@@ -25,7 +26,6 @@ class ship(pygame.sprite.Sprite):
 		self.image= pygame.transform.scale(self.image, (75, 75))
 		self.orig = self.image 
 		self.x = 0
-		self.y = 360
 		self.rect.x = random.randrange(300)
 		self.rect.y = random.randrange(300)
 		self.angle = angle
@@ -39,6 +39,7 @@ class ship(pygame.sprite.Sprite):
 		rot_image = rot_image.subsurface(rot_rect).copy()
 		return rot_image
 	def move(self,direction):
+		'''Takes a key input then moves the ship based on it'''
 		pygame.key.get_pressed
 		if direction[pygame.K_UP]:
 			self.angle += 10
@@ -107,7 +108,7 @@ class ship(pygame.sprite.Sprite):
 			b = ship.rotater(self.orig, self.x - 10) 
 			self.x -= 10
 			if self.x < 0:
-				self.y = 360
+				self.x = 360
 			self.image = b
 		elif direction[pygame.K_RIGHT]: 
 			'''Moves the ship backwards'''

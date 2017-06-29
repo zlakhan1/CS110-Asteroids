@@ -56,8 +56,10 @@ def main():
 
 	while game_screen == True:
 		screen.blit(background,(0,0))
-		clock.tick(160) 
+		clock.tick(60) 
 		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+					return 
 			#if event.type == evnt:
 				#return
 			crash = pygame.sprite.collide_rect(aster, nimbus)
@@ -65,13 +67,17 @@ def main():
 			if crash:
 				nimbus.rect.x =(300)
 				nimbus.rect.y =(300)	
-				counter += 1
-				print('cross')
+				#counter += 1
+				nimbus.livesUpdate()
+				if nimbus.health<0:
+					game_screen = False
+					end_screen = True 
+				print('health:',nimbus.health)
 				print(counter)
 			if counter == 1:
 				screen.blit(game_over,(100,100))			
 
-			nimbus.score = 0			
+			#player.score = 0			
 			shot = pygame.sprite.spritecollide(laser,allsprites,True)			
 			if shot:
 				allsprites.add(aster)
@@ -80,7 +86,7 @@ def main():
 				laser.rect.x = 6000
 				laser.rect.y = 6000
 				pygame.display.flip()
-				nimbus.score +=50
+				player.points(50)
 				print('hit')
 			
 			keys = pygame.key.get_pressed()
@@ -92,6 +98,7 @@ def main():
 		#if event.type == pygame.event.Event(crash)+1:
 		#	allsprites.add(aster)
 				#allsprites.add(laser) 
+		aster.move(aster.angle) 
 		currentscore = str(player.current())
 		pygame.display.set_caption(currentscore)   
 		laser.update()
@@ -104,14 +111,11 @@ def main():
 	#quit()
 	while end_screen == True:
 		playerscore = player.player() 
-		playerscore = 'High Score' + ':' + str(up) 
-		print("up", up) 
+		playerscore = 'High Score' + ':' + str(playerscore) 
 		myfont = pygame.font.SysFont("Britannic Bold", 40)
 		intro = myfont.render("Gameover, press enter to continue", 1,white)
-		scorer = myfont.render(up, 0 , white) 		
-		myfont = pygame.font.SysFont("Britannic Bold", 40)
-		intro = myfont.render("Gameover, press enter to continue", 1,white) 
-		scorer = myfont.render(up, 0 , white)
+		scorer = myfont.render(playerscore, 0 , white) 		 
+		scorer = myfont.render(playerscore, 0 , white)
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 					return 
@@ -121,6 +125,7 @@ def main():
 				end_screen = False
 				start_screen = True 
 		screen.blit(intro,(100,100)) 
+		screen.blit(scorer,(100,50)) 
 		pygame.display.flip() 
 main() 
 

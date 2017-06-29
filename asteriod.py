@@ -21,10 +21,10 @@ class asteriod(pygame.sprite.Sprite):
 		self.rect.x = random.randrange(600)
 		self.rect.y = random.randrange(600)
 		self.angle = angle 
-	def move(self):
+	def move(self,angle):
 		'''Asteriod moves based on angle depending on the random value the asteroids will move at different angles'''
-		self.rect.x += (math.cos(math.radians(self.angle)) * 100)
-		self.rect.y -= (math.sin(math.radians(self.angle)) * 100)
+		self.rect.x += (math.cos(math.radians(self.angle)) * 10)
+		self.rect.y -= (math.sin(math.radians(self.angle)) * 10)
 		'''Checks if the asteriod is pointed toward the first quadarant'''
 		if 0<self.angle<90:	
 			if self.rect.y<0 or self.rect.x>600:
@@ -70,8 +70,6 @@ class asteriod(pygame.sprite.Sprite):
 		elif self.angle == 360 or self.angle == 0:
 			if self.rect.x > 600:
 				self.rect.x -= 600
-		angler = random.randrange(0,361)
-		self.angle = angler
 			
 	def health(self):
 		'''Sets the asteriods health'''
