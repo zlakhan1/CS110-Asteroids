@@ -2,12 +2,13 @@ import pygame
 import math
 import bullet
 import os,sys 
+import random
 def load_image(name, colorkey=None):
 	'''Loads an image and converts it to use in pygame'''
 	fullname = os.path.join("assets", name) 
 	image = pygame.image.load(fullname) 
 	image = image.convert_alpha() 
-	pygame.transform.scale(image,(100,100))
+	pygame.transform.scale(image,(75,75))
 	if colorkey is not None:
 		if colorkey is -1:
 			colorkey = image.get_at((0,0))
@@ -21,12 +22,12 @@ class ship(pygame.sprite.Sprite):
 	def __init__(self, x , y, angle):
 		pygame.sprite.Sprite.__init__(self)
 		self.image, self.rect = load_image('spaceshipmod.png', -1) 
-		self.image= pygame.transform.scale(self.image, (100, 100))
+		self.image= pygame.transform.scale(self.image, (75, 75))
 		self.orig = self.image 
 		self.x = 0
 		self.y = 360
-		self.rect.x = x
-		self.rect.y = y
+		self.rect.x = random.randrange(300)
+		self.rect.y = random.randrange(300)
 		self.angle = angle
 		self.health = 3 
 	def rotater(image,angle):

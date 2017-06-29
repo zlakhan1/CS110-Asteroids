@@ -7,7 +7,7 @@ def load_image(name, colorkey=None):
 	fullname = os.path.join("assets", name) 
 	image = pygame.image.load(fullname) 
 	image = image.convert_alpha() 
-	image = pygame.transform.scale(image,(100,100))
+	image = pygame.transform.scale(image,(75,75))
 	if colorkey is not None:
 		if colorkey is -1:
 			colorkey = image.get_at((0,0))
@@ -17,9 +17,9 @@ class asteriod(pygame.sprite.Sprite):
 	def __init__(self,x,y,angle):
 		pygame.sprite.Sprite.__init__(self)
 		self.image, self.rect = load_image('asteriod.png', -1) 
-		self.image = pygame.transform.scale(self.image, (100, 100))
-		self.rect.x = x
-		self.rect.y =y 
+		self.image = pygame.transform.scale(self.image, (75, 75))
+		self.rect.x = random.randrange(600)
+		self.rect.y = random.randrange(600)
 		self.angle = angle 
 	def move(self):
 		'''Asteriod moves based on angle depending on the random value the asteroids will move at different angles'''
