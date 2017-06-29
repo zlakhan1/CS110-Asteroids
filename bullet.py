@@ -15,7 +15,7 @@ def load_image(name, colorkey=None):
 class bullet(pygame.sprite.Sprite):
 	'''Bullet class gets called by the ship'''
 	def __init__(self,x,y,angle):
-	'''Initalizes the bullet'''
+		'''Initalizes the bullet'''
 		pygame.sprite.Sprite.__init__(self)
 		self.image, self.rect = load_image('laser.png', -1)  
 		self.image = pygame.transform.scale(self.image, (50, 50))
